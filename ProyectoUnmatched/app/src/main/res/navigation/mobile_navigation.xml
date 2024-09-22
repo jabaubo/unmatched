@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_pvp">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="proyecto.unmatched.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_pve"
+        android:name="proyecto.unmatched.ui.gallery.GalleryFragment"
+        android:label="@string/menu_pve"
+        tools:layout="@layout/fragment_pve" />
+
+    <fragment
+        android:id="@+id/nav_pvp"
+        android:name="proyecto.unmatched.ui.pvp.PvpFragment"
+        android:label="@string/menu_pvp"
+        tools:layout="@layout/fragment_pvp" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="proyecto.unmatched.ui.gallery.GalleryFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
