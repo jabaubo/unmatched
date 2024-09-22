@@ -3,6 +3,7 @@ Apartado PVP
   - Selección de jugadores
   - Equipos
   - Tiers
-Apartado PVP
+
+Apartado PVE
   - Selección de jugadores
   - Selección de villanos
