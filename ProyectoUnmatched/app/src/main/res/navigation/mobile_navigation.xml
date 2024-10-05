@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_pve"
-        android:name="proyecto.unmatched.ui.gallery.GalleryFragment"
+        android:name="proyecto.unmatched.ui.pve.PveFragment"
         android:label="@string/menu_pve"
         tools:layout="@layout/fragment_pve" />
 

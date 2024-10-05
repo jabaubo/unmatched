@@ -10,6 +10,9 @@ public class Controlador {
     ArrayList<Personaje> personajesTierC = new ArrayList<>();
     ArrayList<Personaje> personajesTierD = new ArrayList<>();
 
+    ArrayList<Villano> villanos = new ArrayList<>();
+    ArrayList<Jefe> jefes = new ArrayList<>();
+
 
     public Controlador() {
         // Tier S
@@ -63,6 +66,8 @@ public class Controlador {
         Personaje tRex = new Personaje("T. Rex", "B");
         Personaje theGenie = new Personaje("The Genie", "B");
         Personaje tomoeGozen = new Personaje("Tomoe Gozen", "B");
+        Personaje blackWidow = new Personaje("Black Widow", "B");
+        Personaje winterSoldier = new Personaje("Winter Soldier", "B");
 
         personajes.add(daredevil);
         personajes.add(dracula);
@@ -70,6 +75,8 @@ public class Controlador {
         personajes.add(tRex);
         personajes.add(theGenie);
         personajes.add(tomoeGozen);
+        personajes.add(blackWidow);
+        personajes.add(winterSoldier);
 
         personajesTierB.add(daredevil);
         personajesTierB.add(dracula);
@@ -77,6 +84,8 @@ public class Controlador {
         personajesTierB.add(tRex);
         personajesTierB.add(theGenie);
         personajesTierB.add(tomoeGozen);
+        personajesTierB.add(blackWidow);
+        personajesTierB.add(winterSoldier);
 
         // Tier C
         Personaje annieChristmas = new Personaje("Annie Christmas", "C");
@@ -84,36 +93,69 @@ public class Controlador {
         Personaje bloodyMary = new Personaje("Bloody Mary", "C");
         Personaje bullseye = new Personaje("Bullseye", "C");
         Personaje drEllieSattler = new Personaje("Dr. Ellie Sattler", "C");
-
+        Personaje msMarvel = new Personaje("Ms. Marvel", "C");
+        Personaje blackPanther = new Personaje("Black Panther", "C");
 
         personajes.add(annieChristmas);
         personajes.add(beowulf);
         personajes.add(bloodyMary);
         personajes.add(bullseye);
         personajes.add(drEllieSattler);
+        personajes.add(msMarvel);
+        personajes.add(blackPanther);
 
         personajesTierC.add(annieChristmas);
         personajesTierC.add(beowulf);
         personajesTierC.add(bloodyMary);
         personajesTierC.add(bullseye);
         personajesTierC.add(drEllieSattler);
+        personajesTierC.add(msMarvel);
+        personajesTierC.add(blackPanther);
 
 
         // Tier D
         Personaje invisibleMan = new Personaje("El Hombre Invisible", "D");
         Personaje jekyllHyde = new Personaje("Jekyll & Hyde", "D");
         Personaje odaNobunaga = new Personaje("Oda Nobunaga", "D");
+        Personaje cloakYDagger = new Personaje("Cloak y Dagger", "D");
 
         personajes.add(invisibleMan);
         personajes.add(jekyllHyde);
         personajes.add(odaNobunaga);
+        personajes.add(cloakYDagger);
 
         personajesTierD.add(invisibleMan);
         personajesTierD.add(jekyllHyde);
         personajesTierD.add(odaNobunaga);
+        personajesTierD.add(cloakYDagger);
+
+        //Tier F
+        Personaje squirrelGirl = new Personaje("Squirrel Girl", "F");
+        personajes.add(squirrelGirl);
+
+        //Jefes
+        Jefe hombrePolilla = new Jefe("El Hombre Polilla");
+        Jefe invasorDeMarte = new Jefe("El Invasor de Marte");
+
+        jefes.add(hombrePolilla);
+        jefes.add(invasorDeMarte);
+
+        //Villanos
+        Villano diabloDeJersey = new Villano("Diablo de Jersey");
+        Villano ranaDeLoveland = new Villano("Rana de Loveland");
+        Villano tarantula = new Villano("Tarántula");
+        Villano amorfo = new Villano("Amorfo");
+        Villano monoMofeta = new Villano("Mono Mofeta");
+        Villano reinaHormiga = new Villano("Reina Hormiga");
+
+        villanos.add(diabloDeJersey);
+        villanos.add(ranaDeLoveland);
+        villanos.add(tarantula);
+        villanos.add(amorfo);
+        villanos.add(monoMofeta);
+        villanos.add(reinaHormiga);
 
     }
-
     public ArrayList<Personaje> getPersonajes() {
         return personajes;
     }
@@ -136,5 +178,13 @@ public class Controlador {
 
     public ArrayList<Personaje> getPersonajesTierD() {
         return personajesTierD;
+    }
+
+    public ArrayList<Jefe> getJefes() {
+        return jefes;
+    }
+
+    public ArrayList<Villano> getVillanos() {
+        return villanos;
     }
 }

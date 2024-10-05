@@ -1,4 +1,4 @@
-package proyecto.unmatched.ui.pvp;
+package proyecto.unmatched.ui.pve;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,26 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 
 import proyecto.unmatched.Controlador;
+import proyecto.unmatched.Jefe;
 import proyecto.unmatched.Personaje;
-import proyecto.unmatched.databinding.FragmentHomeBinding;
+import proyecto.unmatched.Villano;
+import proyecto.unmatched.databinding.FragmentPveBinding;
 import proyecto.unmatched.databinding.FragmentPvpBinding;
-import proyecto.unmatched.ui.home.HomeViewModel;
 
-public class PvpFragment extends Fragment {
+public class PveFragment extends Fragment {
 
-    private FragmentPvpBinding binding;
+    private FragmentPveBinding binding;
 
     EditText etJugadores;
-    Switch sEquipos;
     Switch sTiers;
     Spinner spTiers;
     Button boton;
@@ -38,12 +36,11 @@ public class PvpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentPvpBinding.inflate(inflater, container, false);
+        binding = FragmentPveBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        etJugadores = binding.etJugadoresPVP;
-        sEquipos = binding.sEquiposPVP;
-        sTiers = binding.sTiersPvp;
+        etJugadores = binding.etJugadoresPVE;
+        sTiers = binding.sTiersPve;
         boton = binding.bPVP;
         spTiers = binding.spinner;
 
@@ -75,28 +72,9 @@ public class PvpFragment extends Fragment {
     public void clickBoton(){
         int jugadores = Integer.valueOf(etJugadores.getText().toString());
         System.out.println("Click");
-        if (sEquipos.isChecked() && (jugadores%2!=0)){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
-            builder.setTitle("Advertencia")
-                    .setMessage("El número de jugadores debe ser par para el juego por equipos")
-                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Acción cuando se hace clic en "Aceptar"
-                        }
-                    })
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Acción cuando se hace clic en "Cancelar"
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-        }
-        else {
             ArrayList<Personaje> listadoPersonajes = new ArrayList<>();
+            ArrayList<Villano> listadoVillanos = controlador.getVillanos();
+            ArrayList<Jefe> listadoJefes = controlador.getJefes();
             if (sTiers.isChecked()){
                 switch (spTiers.getSelectedItem().toString()){
                     case "S":
@@ -141,12 +119,21 @@ public class PvpFragment extends Fragment {
             else{
                 if (jugadores > 0 ){
                     ArrayList<Personaje> personajes = new ArrayList<>();
+                    Jefe jefe = listadoJefes.get((int) (Math.random() * listadoJefes.size()));
+                    ArrayList<Villano> villanos = new ArrayList<>();
                     for (int i = 0 ; i < jugadores ; i++){
                         boolean completado = false;
                         while (!completado) {
                             int personaje = (int) (Math.random() * listadoPersonajes.size());
                             if (!personajes.contains(listadoPersonajes.get(personaje))) {
                                 personajes.add(listadoPersonajes.get(personaje));
+                                completado = true;
+                            }
+                        }completado = false;
+                        while (!completado) {
+                            int personaje = (int) (Math.random() * listadoVillanos.size());
+                            if (!villanos.contains(listadoVillanos.get(personaje))) {
+                                villanos.add(listadoVillanos.get(personaje));
                                 completado = true;
                             }
                         }
@@ -157,21 +144,14 @@ public class PvpFragment extends Fragment {
                     }
                     System.out.println("------------------------------------");
                     String pelea="";
-                    if (sEquipos.isChecked()){
-                        pelea = "";
-                        for (int i = 0 ; i <personajes.size()/2 ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
-                        pelea +="\nVS\n\n";
-                        for (int i = personajes.size()/2 ; i <personajes.size() ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
+                    for (int i = 0 ; i <personajes.size() ; i++){
+                        pelea += personajes.get(i).getNombre() + "\n";
                     }
-                    else {
-                        for (int i = 0 ; i <personajes.size() ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
+                    pelea += String.format("\nVS\n\n%s\n\n",jefe.getNombre());
+                    for (int i = 0 ; i <villanos.size() ; i++){
+                        pelea += villanos.get(i).getNombre() + "\n";
                     }
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
                     builder.setTitle("Pelea")
                             .setMessage(pelea)
@@ -194,8 +174,6 @@ public class PvpFragment extends Fragment {
 
                 }
             }
-
-        }
 
     }
     public void checkTier(){
