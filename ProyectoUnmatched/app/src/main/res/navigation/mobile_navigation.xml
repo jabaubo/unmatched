@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="proyecto.unmatched.ui.gallery.GalleryFragment"
+        android:name="proyecto.unmatched.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

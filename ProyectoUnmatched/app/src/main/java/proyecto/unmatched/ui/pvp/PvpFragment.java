@@ -20,10 +20,11 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.ArrayList;
 
 import proyecto.unmatched.Controlador;
+import proyecto.unmatched.MainActivity;
 import proyecto.unmatched.Personaje;
 import proyecto.unmatched.databinding.FragmentHomeBinding;
 import proyecto.unmatched.databinding.FragmentPvpBinding;
-import proyecto.unmatched.ui.home.HomeViewModel;
+import proyecto.unmatched.ui.dialogs.MapDialog;
 
 public class PvpFragment extends Fragment {
 
@@ -34,10 +35,11 @@ public class PvpFragment extends Fragment {
     Switch sTiers;
     Spinner spTiers;
     Button boton;
-    Controlador controlador= new Controlador();
+    Controlador controlador;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        controlador= ((MainActivity)this.getActivity()).getControlador();
         binding = FragmentPvpBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -73,108 +75,64 @@ public class PvpFragment extends Fragment {
         binding = null;
     }
     public void clickBoton(){
-        int jugadores = Integer.valueOf(etJugadores.getText().toString());
-        System.out.println("Click");
-        if (sEquipos.isChecked() && (jugadores%2!=0)){
+        if (etJugadores.getText().toString().equals("")){
             AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
             builder.setTitle("Advertencia")
-                    .setMessage("El número de jugadores debe ser par para el juego por equipos")
+                    .setMessage("Debe haber jugadores")
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // Acción cuando se hace clic en "Aceptar"
                         }
-                    })
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Acción cuando se hace clic en "Cancelar"
-                        }
                     });
             AlertDialog dialog = builder.create();
             dialog.show();
-
         }
         else {
-            ArrayList<Personaje> listadoPersonajes = new ArrayList<>();
-            if (sTiers.isChecked()){
-                switch (spTiers.getSelectedItem().toString()){
-                    case "S":
-                        listadoPersonajes = controlador.getPersonajesTierS();
-                        System.out.println(listadoPersonajes.size());
-                        break;
-                    case "A":
-                        listadoPersonajes = controlador.getPersonajesTierA();
-                        break;
-                    case "B":
-                        listadoPersonajes = controlador.getPersonajesTierB();
-                        break;
-                    case "C":
-                        listadoPersonajes = controlador.getPersonajesTierC();
-                        break;
-                    case "D":
-                        listadoPersonajes = controlador.getPersonajesTierD();
-                }
-            }
-            else {
-                listadoPersonajes = controlador.getPersonajes();
-            }
-            if (listadoPersonajes.size() < jugadores){
+            int jugadores = Integer.valueOf(etJugadores.getText().toString());
+            System.out.println("Click");
+            if (sEquipos.isChecked() && (jugadores%2!=0)){
                 AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
-                builder.setTitle("Error")
-                        .setMessage("No hay suficientes personajes")
+                builder.setTitle("Advertencia")
+                        .setMessage("El número de jugadores debe ser par para el juego por equipos")
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Acción cuando se hace clic en "Aceptar"
                             }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Acción cuando se hace clic en "Cancelar"
-                            }
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
             }
-            else{
-                if (jugadores > 0 ){
-                    ArrayList<Personaje> personajes = new ArrayList<>();
-                    for (int i = 0 ; i < jugadores ; i++){
-                        boolean completado = false;
-                        while (!completado) {
-                            int personaje = (int) (Math.random() * listadoPersonajes.size());
-                            if (!personajes.contains(listadoPersonajes.get(personaje))) {
-                                personajes.add(listadoPersonajes.get(personaje));
-                                completado = true;
-                            }
-                        }
+            else {
+                ArrayList<Personaje> listadoPersonajes = new ArrayList<>();
+                if (sTiers.isChecked()){
+                    switch (spTiers.getSelectedItem().toString()){
+                        case "S":
+                            listadoPersonajes = controlador.getPersonajesTierS();
+                            System.out.println(listadoPersonajes.size());
+                            break;
+                        case "A":
+                            listadoPersonajes = controlador.getPersonajesTierA();
+                            break;
+                        case "B":
+                            listadoPersonajes = controlador.getPersonajesTierB();
+                            break;
+                        case "C":
+                            listadoPersonajes = controlador.getPersonajesTierC();
+                            break;
+                        case "D":
+                            listadoPersonajes = controlador.getPersonajesTierD();
                     }
-                    System.out.println("------------------------------------");
-                    for (int i = 0 ; i < personajes.size() ; i++){
-                        System.out.println(personajes.get(i));
-                    }
-                    System.out.println("------------------------------------");
-                    String pelea="";
-                    if (sEquipos.isChecked()){
-                        pelea = "";
-                        for (int i = 0 ; i <personajes.size()/2 ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
-                        pelea +="\nVS\n\n";
-                        for (int i = personajes.size()/2 ; i <personajes.size() ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
-                    }
-                    else {
-                        for (int i = 0 ; i <personajes.size() ; i++){
-                            pelea += personajes.get(i).getNombre() + "\n";
-                        }
-                    }
+                }
+                else {
+                    listadoPersonajes = controlador.getPersonajes();
+                }
+                if (listadoPersonajes.size() < jugadores){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
-                    builder.setTitle("Pelea")
-                            .setMessage(pelea)
+                    builder.setTitle("Error")
+                            .setMessage("No hay suficientes personajes")
                             .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -187,15 +145,72 @@ public class PvpFragment extends Fragment {
                                     // Acción cuando se hace clic en "Cancelar"
                                 }
                             });
-
-                    // Crear y mostrar el AlertDialog
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
                 }
-            }
+                else{
+                    if (jugadores > 0 ){
+                        ArrayList<Personaje> personajes = new ArrayList<>();
+                        for (int i = 0 ; i < jugadores ; i++){
+                            boolean completado = false;
+                            while (!completado) {
+                                int personaje = (int) (Math.random() * listadoPersonajes.size());
+                                if (!personajes.contains(listadoPersonajes.get(personaje))) {
+                                    personajes.add(listadoPersonajes.get(personaje));
+                                    completado = true;
+                                }
+                            }
+                        }
+                        System.out.println("------------------------------------");
+                        for (int i = 0 ; i < personajes.size() ; i++){
+                            System.out.println(personajes.get(i));
+                        }
+                        System.out.println("------------------------------------");
+                        String pelea="";
+                        if (sEquipos.isChecked()){
+                            pelea = "";
+                            for (int i = 0 ; i <personajes.size()/2 ; i++){
+                                pelea += personajes.get(i).getNombre() + "\n";
+                            }
+                            pelea +="\nVS\n\n";
+                            for (int i = personajes.size()/2 ; i <personajes.size() ; i++){
+                                pelea += personajes.get(i).getNombre() + "\n";
+                            }
+                        }
+                        else {
+                            for (int i = 0 ; i <personajes.size() ; i++){
+                                pelea += personajes.get(i).getNombre() + "\n";
+                            }
+                        }
+                    /*
+                    int bvs = (int) (Math.random()*2)+1;
+                    System.out.println(bvs);
+                    if (bvs == 2){
+                        pelea += "Blanca Varo\n";
+                    }*/
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
+                        builder.setTitle("Pelea")
+                                .setMessage(pelea)
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Acción cuando se hace clic en "Aceptar"
+                                        MapDialog mapDialog = new MapDialog(jugadores);
+                                        mapDialog.show(getParentFragmentManager(),null);
+                                    }
+                                });
 
+                        // Crear y mostrar el AlertDialog
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
+                }
+
+            }
         }
+
 
     }
     public void checkTier(){

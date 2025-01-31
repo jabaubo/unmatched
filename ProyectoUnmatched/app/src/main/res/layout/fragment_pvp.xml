@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.settings.SettingsFragment">
 
     <TextView
         android:id="@+id/textView7"
@@ -69,10 +69,18 @@
 
     <Button
         android:id="@+id/bPVP"
+        style="Widget.Material3.Button"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Button"
+        android:backgroundTint="#222121"
+        android:backgroundTintMode="add"
+        android:foregroundTint="#222121"
+        android:foregroundTintMode="src_over"
+        android:hapticFeedbackEnabled="true"
+        android:text="@string/iniciar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 

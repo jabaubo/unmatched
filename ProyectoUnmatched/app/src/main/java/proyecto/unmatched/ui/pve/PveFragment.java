@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import proyecto.unmatched.Controlador;
 import proyecto.unmatched.Jefe;
+import proyecto.unmatched.MainActivity;
 import proyecto.unmatched.Personaje;
 import proyecto.unmatched.Villano;
 import proyecto.unmatched.databinding.FragmentPveBinding;
@@ -32,7 +33,7 @@ public class PveFragment extends Fragment {
     Switch sTiers;
     Spinner spTiers;
     Button boton;
-    Controlador controlador= new Controlador();
+    Controlador controlador;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -61,6 +62,7 @@ public class PveFragment extends Fragment {
             }
         });
         checkTier();
+        controlador = ((MainActivity)getActivity()).getControlador();
         return root;
     }
 
@@ -70,8 +72,22 @@ public class PveFragment extends Fragment {
         binding = null;
     }
     public void clickBoton(){
-        int jugadores = Integer.valueOf(etJugadores.getText().toString());
-        System.out.println("Click");
+        if (etJugadores.getText().toString().equals("")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
+            builder.setTitle("Error")
+                    .setMessage("Indica cuantos jugadores")
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Acción cuando se hace clic en "Aceptar"
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else {
+            int jugadores = Integer.valueOf(etJugadores.getText().toString());
+            System.out.println("Click");
             ArrayList<Personaje> listadoPersonajes = new ArrayList<>();
             ArrayList<Villano> listadoVillanos = controlador.getVillanos();
             ArrayList<Jefe> listadoJefes = controlador.getJefes();
@@ -174,6 +190,7 @@ public class PveFragment extends Fragment {
 
                 }
             }
+        }
 
     }
     public void checkTier(){
