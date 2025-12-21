@@ -16,10 +16,13 @@
     <string name="menu">Menú</string>
     <string name="menu_pvp">PVP</string>
     <string name="menu_settings">Configuración</string>
+    <string name="menu_caos">Caos</string>
     <string name="menu_players">Jugadores</string>
     <string name="menu_equipos">Equipos</string>
     <string name="menu_tier">Tier</string>
 
+    <string name="settings_personajes">Personajes</string>
+    <string name="settings_sets">Sets</string>
 
 
 </resources>

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.MyViewHolder> {
-    //MyData es la clase que vamos a tratar
     private List<Personaje> dataList;
 
     public PersonajeAdapter(List<Personaje> dataList) {

@@ -40,6 +40,7 @@ public class PvpFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         controlador= ((MainActivity)this.getActivity()).getControlador();
+
         binding = FragmentPvpBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -66,6 +67,8 @@ public class PvpFragment extends Fragment {
             }
         });
         checkTier();
+        controlador.testConteo();
+
         return root;
     }
 
@@ -75,6 +78,7 @@ public class PvpFragment extends Fragment {
         binding = null;
     }
     public void clickBoton(){
+        //Comprobar cantidad de jugadores
         if (etJugadores.getText().toString().equals("")){
             AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
             builder.setTitle("Advertencia")
@@ -82,7 +86,6 @@ public class PvpFragment extends Fragment {
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // Acción cuando se hace clic en "Aceptar"
                         }
                     });
             AlertDialog dialog = builder.create();
@@ -90,7 +93,7 @@ public class PvpFragment extends Fragment {
         }
         else {
             int jugadores = Integer.valueOf(etJugadores.getText().toString());
-            System.out.println("Click");
+            //Si está activado el por equipos , que sean jugadores pares
             if (sEquipos.isChecked() && (jugadores%2!=0)){
                 AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
                 builder.setTitle("Advertencia")
@@ -98,7 +101,6 @@ public class PvpFragment extends Fragment {
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Acción cuando se hace clic en "Aceptar"
                             }
                         });
                 AlertDialog dialog = builder.create();
@@ -106,6 +108,7 @@ public class PvpFragment extends Fragment {
 
             }
             else {
+                //Elegir tier
                 ArrayList<Personaje> listadoPersonajes = new ArrayList<>();
                 if (sTiers.isChecked()){
                     switch (spTiers.getSelectedItem().toString()){
@@ -136,13 +139,6 @@ public class PvpFragment extends Fragment {
                             .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Acción cuando se hace clic en "Aceptar"
-                                }
-                            })
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Acción cuando se hace clic en "Cancelar"
                                 }
                             });
                     AlertDialog dialog = builder.create();
@@ -162,9 +158,7 @@ public class PvpFragment extends Fragment {
                             }
                         }
                         System.out.println("------------------------------------");
-                        for (int i = 0 ; i < personajes.size() ; i++){
-                            System.out.println(personajes.get(i));
-                        }
+
                         System.out.println("------------------------------------");
                         String pelea="";
                         if (sEquipos.isChecked()){
@@ -182,12 +176,6 @@ public class PvpFragment extends Fragment {
                                 pelea += personajes.get(i).getNombre() + "\n";
                             }
                         }
-                    /*
-                    int bvs = (int) (Math.random()*2)+1;
-                    System.out.println(bvs);
-                    if (bvs == 2){
-                        pelea += "Blanca Varo\n";
-                    }*/
                         AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
                         builder.setTitle("Pelea")
                                 .setMessage(pelea)
