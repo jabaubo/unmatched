@@ -7,3 +7,5 @@ Apartado PVP
 Apartado PVE
   - Selección de jugadores
   - Selección de villanos
+
+Pruebas con git kraken
